@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Card = (props) => {
-	const [icon, setIcon] = useState(props.card.back);
-
-	const handleClick = (event) => {
-		setIcon(props.card.front);
-	}
-
+const Card = ({ card, onClick }) => {
 	return (
-		<li className="card" data-id={props.card.id} onClick={handleClick}><FontAwesomeIcon icon={icon} /></li>
+		<li className={"card" + (card.isMatch ? " is-match" : "")} data-id={card.id} onClick={onClick}><FontAwesomeIcon icon={card.isOpen ? card.front : card.back} /></li>
 	)
 }
 

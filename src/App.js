@@ -7,7 +7,7 @@ import './styles/main.scss';
 function App() {
 	return (
 		<div className="container">
-			<h1>It Works</h1>
+			<h1>Memory for Webdevs</h1>
 			<Board />
 		</div>
 	)
