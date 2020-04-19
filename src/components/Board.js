@@ -34,7 +34,7 @@ const Board = () => {
 
 	useEffect(() => {
 		if (matches === cards.length) {
-			alert('Game over!, you are awesome!!!');
+			alert('Game finished, you are awesome!!!');
 			setCards(createCards());
 			setMatches(0);
 		}
