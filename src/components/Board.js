@@ -3,79 +3,84 @@ import Card from './Card';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
 const Board = () => {
-	const createCards = () => {
-		const icons = [fab.faHtml5, fab.faCss3, fab.faJs, fab.faReact, fab.faVuejs, fab.faAngular];
+    const createCards = () => {
+        const icons = [fab.faHtml5, fab.faCss3, fab.faJs, fab.faReact, fab.faVuejs, fab.faAngular];
 
-		const cards = icons.concat(icons).map((icon, id) => {
-			return { id, back: fab.faPagelines, front: icon, isOpen: false, isMatch: false };
-		});
+        const cards = icons.concat(icons).map((icon, id) => {
+            return { id, back: fab.faPagelines, front: icon, isOpen: false, isMatch: false };
+        });
 
-		//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-		// Shuffle cards
-		for (let i = cards.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			const temp = cards[i];
-			cards[i] = cards[j];
-			cards[j] = temp;
-		}
+        //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+        // Shuffle cards
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = cards[i];
+            cards[i] = cards[j];
+            cards[j] = temp;
+        }
 
-		return cards;
-	}
+        return cards;
+    }
 
-	const [cards, setCards] = useState(createCards());
-	const [openedCards, setOpenedCards] = useState([]);
-	const [matches, setMatches] = useState(0);
+    const [cards, setCards] = useState(createCards());
+    const [openedCards, setOpenedCards] = useState([]);
+    const [matches, setMatches] = useState(0);
+    const [boardIsReady, setBoardIsReady] = useState(false);
 
-	useEffect(() => {
-		if (openedCards.length === 2) {
-			checkMatch();
-		}
-	}, [openedCards])
+    useEffect(() => {
+        setBoardIsReady(true);
+    }, [boardIsReady])
 
-	useEffect(() => {
-		if (matches === cards.length) {
-			alert('Game finished, you are awesome!!!');
-			setCards(createCards());
-			setMatches(0);
-		}
-	}, [matches])
+    useEffect(() => {
+        if (openedCards.length === 2) {
+            checkMatch();
+        }
+    }, [openedCards])
 
-	const onCardClick = (card) => {
-		if (card.isMatch || openedCards.length == 2) return false;
+    useEffect(() => {
+        if (matches === cards.length) {
+            alert('Game finished, you are awesome!!!');
+            setCards(createCards());
+            setMatches(0);
+        }
+    }, [matches])
 
-		setOpenedCards([...openedCards, card]);
-		setCards(cards => cards.map(c => {
-			return card.id === c.id ? { ...c, isOpen: true } : c;
-		}));
-	}
+    const onCardClick = (card) => {
+        if (card.isMatch || openedCards.length == 2) return false;
 
-	const checkMatch = () => {
-		if (openedCards[0].front === openedCards[1].front) {
-			setCards(cards => cards.map(c => {
-				return openedCards[0].id === c.id || openedCards[1].id === c.id ? { ...c, isMatch: true } : c;
-			}));
-			setOpenedCards([]);
-			setMatches(matches + 2);
+        setOpenedCards([...openedCards, card]);
+        setCards(cards => cards.map(c => {
+            return card.id === c.id ? { ...c, isOpen: true } : c;
+        }));
+    }
 
-		} else {
-			window.setTimeout(() => {
-				setCards(cards => cards.map(c => {
-					return openedCards[0].id === c.id || openedCards[1].id === c.id ? { ...c, isOpen: false } : c;
-				}));
-				setOpenedCards([]);
-			}, 900);
-		}
-	}
+    const checkMatch = () => {
+        if (openedCards[0].front === openedCards[1].front) {
+            setCards(cards => cards.map(c => {
+                return openedCards[0].id === c.id || openedCards[1].id === c.id ? { ...c, isMatch: true } : c;
+            }));
+            setOpenedCards([]);
+            setMatches(matches + 2);
 
-	return (
-		<>
-			<ul className="board">
-				{cards.map((card, id) => {
-					return <Card onClick={() => onCardClick(card)} key={id} card={card} />
-				})}
-			</ul>
-		</>
-	)
+        } else {
+            window.setTimeout(() => {
+                setCards(cards => cards.map(c => {
+                    return openedCards[0].id === c.id || openedCards[1].id === c.id ? { ...c, isOpen: false } : c;
+                }));
+                setOpenedCards([]);
+            }, 900);
+        }
+    }
+
+    return (
+        <>
+            <ul className={`board ${boardIsReady ? 'show' : ''}`}>
+                {cards.map((card, id) => {
+                    return <Card onClick={() => onCardClick(card)} key={id} card={card} />
+                })}
+            </ul>
+        </>
+    )
 }
 
 export default Board;
