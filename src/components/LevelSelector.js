@@ -1,30 +1,21 @@
 import React, { useState } from 'react';
+import { levels } from '../Config';
 
 const LevelSelector = ({ onClick }) => {
-    const levels = ['Easy', 'Medium', 'Hard', 'Out of this World'];
-
     const handleClick = (e) => {
-        onClick(parseInt(e.target.dataset.level, 10));
+        const level = levels.find(level => level.id === parseInt(e.target.dataset.level, 10));
+        onClick(level);
     }
 
-    {/*
-            <div>
-            <input onClick={handleClick} type="radio" name="level" value="1" /> Level 1
-            <input onClick={handleClick} type="radio" name="level" value="2" /> Level 2
-            <input onClick={handleClick} type="radio" name="level" value="3" /> Level 3
-        </div>
-        */}
     return (
         <>
-            <h3 class="text-center">First select your level:</h3>
-            <ul class="levels">
-                {levels.map((title, level) => {
-                    return <li data-level={level} onClick={handleClick}>{title}</li>
+            <h3 className="text-center">First select your level:</h3>
+            <ul className="levels">
+                {levels.map((level) => {
+                    return <li data-level={level.id} onClick={handleClick} key={level.id}>{level.name}</li>
                 })}
-                {/*<li>Out of this world</li>*/}
             </ul>
         </>
-
     )
 }
 

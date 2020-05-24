@@ -5,15 +5,17 @@ import './styles/main.scss';
 
 function App() {
     const [isLevelSelected, setIsLevelSelected] = useState(false);
+    const [selectedLevel, setSelectedLevel] = useState('');
 
     const selectLevel = (level) => {
+        setSelectedLevel(level);
         setIsLevelSelected(true);
     }
 
     return (
         <div className="container">
-            <h1 class="text-center app-title">Memory for Webdevs</h1>
-            {isLevelSelected ? <Board /> : <LevelSelector onClick={selectLevel} />}
+            <h1 className="text-center app-title">Memory for Webdevs</h1>
+            {isLevelSelected ? <Board selectedLevel={selectedLevel} /> : <LevelSelector onClick={selectLevel} />}
         </div>
     )
 }

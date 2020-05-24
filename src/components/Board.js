@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
+import { faIcons } from '../Config';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
-const Board = () => {
+const Board = ({ selectedLevel }) => {
     const createCards = () => {
-        const icons = [fab.faHtml5, fab.faCss3, fab.faJs, fab.faReact, fab.faVuejs, fab.faAngular];
+        //const icons = [fab.faHtml5, fab.faCss3, fab.faJs, fab.faReact, fab.faVuejs, fab.faAngular];
+        const icons = faIcons.slice(0, selectedLevel.numOfPairs);
 
         const cards = icons.concat(icons).map((icon, id) => {
-            return { id, back: fab.faPagelines, front: icon, isOpen: false, isMatch: false };
+            return { id, back: fab.faPagelines, front: fab['fa' + icon], isOpen: false, isMatch: false };
         });
 
         //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -28,7 +30,9 @@ const Board = () => {
     const [boardIsReady, setBoardIsReady] = useState(false);
 
     useEffect(() => {
-        setBoardIsReady(true);
+        if (!boardIsReady) {
+            setBoardIsReady(true);
+        }
     }, [boardIsReady])
 
     useEffect(() => {
@@ -74,7 +78,7 @@ const Board = () => {
 
     return (
         <>
-            <ul className={`board ${boardIsReady ? 'show' : ''}`}>
+            <ul className={`board board--level-${selectedLevel.id} ${boardIsReady ? 'show' : ''}`}>
                 {cards.map((card, id) => {
                     return <Card onClick={() => onCardClick(card)} key={id} card={card} />
                 })}
