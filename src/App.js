@@ -12,7 +12,7 @@ function App() {
 
     return (
         <div className="container">
-            <h1 class="text-center">Memory for Webdevs</h1>
+            <h1 class="text-center app-title">Memory for Webdevs</h1>
             {isLevelSelected ? <Board /> : <LevelSelector onClick={selectLevel} />}
         </div>
     )
