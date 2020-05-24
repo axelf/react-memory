@@ -8,7 +8,6 @@
     grid-gap: 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    font-size: 10vw;
 
     &.show {
         opacity: 1;
@@ -18,7 +17,6 @@
         grid-template-columns: repeat(3, 1fr);
 
         @media screen and (min-width: $breakpoint) {
-            font-size: 80px;
             grid-template-columns: repeat(4, 1fr);
         }
     }
@@ -27,7 +25,6 @@
         grid-template-columns: repeat(4, 1fr);
 
         @media screen and (min-width: $breakpoint) {
-            font-size: 60px;
             grid-template-columns: repeat(6, 1fr);
         }
     }
@@ -36,17 +33,14 @@
         grid-template-columns: repeat(6, 1fr);
 
         @media screen and (min-width: $breakpoint) {
-            font-size: 50px;
             grid-template-columns: repeat(8, 1fr);
         }
     }
 
     &--level-4 {
         grid-template-columns: repeat(8, 1fr);
-        font-size: 7vw;
 
         @media screen and (min-width: $breakpoint) {
-            font-size: 30px;
             grid-template-columns: repeat(12, 1fr);
         }
     }
@@ -73,6 +67,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
+        width: auto !important;
+        height: auto !important;
+
     }
 }
 
